@@ -1,0 +1,10 @@
+name = "gw2-api-extended"
+main = "src/index.ts"
+compatibility_date = "2022-11-20"
+
+kv_namespaces = [
+    { binding = "discretize_skills", id = "572e59fff9ec41edaf331112d0042fa0", preview_id = "75ec5671867c46d397c2cf4435d00584" },
+    { binding = "discretize_traits", id = "ff378b611aa149c096b4f1668065b040", preview_id = "18dd818480de4d858a9d69ee0ebb0e3b" },
+    { binding = "discretize_items", id = "6e223d87e68f4e72b77142e6671381de", preview_id = "f2b3af58952845689f076e4f564d9a04" },
+    { binding = "discretize_specializations", id = "22d442554c884ceba4f11bd354a5371d", preview_id = "871885472034487d84a13a0e344e31d4" }
+]
