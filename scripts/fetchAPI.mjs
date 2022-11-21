@@ -2,7 +2,7 @@ import fs from "fs";
 
 const CHUNK_SIZE = 200;
 const RATE_LIMIT = 300;
-const OUTPUT = "api/";
+const OUTPUT = "data/api/";
 const ENDPOINTS = ["skills", "specializations", "traits", "items"];
 
 async function fetchData(type) {
