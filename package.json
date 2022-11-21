@@ -12,7 +12,10 @@
   "scripts": {
     "start": "wrangler dev",
     "dev": "yarn start",
-    "deploy": "wrangler publish"
+    "deploy": "wrangler publish",
+    "updateAPI": "node ./scripts/fetchAPI.mjs",
+    "prepareExtendedAPI": "ts-node ./scripts/prepareExtendedAPI.ts",
+    "uploadKV": "ts-node ./scripts/uploadKV.ts"
   },
   "dependencies": {
     "@discretize/gw2-ui-new": "^0.1.2",
