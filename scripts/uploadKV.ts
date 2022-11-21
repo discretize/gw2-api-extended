@@ -10,6 +10,18 @@ const DATA_DIR = "./data";
 const TMP = "./tmp";
 const TTL = 604800;
 
+const normalize = (str: string | undefined): string | undefined =>
+  str
+    ? str
+        .replaceAll(/[^A-Za-z]/g, "")
+        .toLowerCase()
+        .trim()
+    : undefined;
+
+const uniqueBy = (arr: any[], prop: string) => {
+  return [...new Map(arr.map((m) => [m[prop], m])).values()];
+};
+
 /**
  * This methods reads the input of tha paramter and writes it to a temporary position.
  * Then it uploads the content of the temporay file to the KV store.
@@ -22,15 +34,24 @@ function uploadKV<T extends WithId>(
 ) {
   const apiExtendedData: T[] = readFile(DATA_DIR + "/api-extended/", file);
 
-  const ready = apiExtendedData.map((d) => ({
+  const byId = apiExtendedData.map((d) => ({
     key: `${d.id}`,
     value: JSON.stringify(d),
     expiration_ttl: TTL,
   }));
+  const byName = apiExtendedData
+    .filter((d) => normalize(d.name))
+    .map((d) => ({
+      key: `${normalize(d.name)}`,
+      value: JSON.stringify(d),
+      expiration_ttl: TTL,
+    }));
+
+  const allData = uniqueBy([...byId, ...byName], "key");
 
   // write to tmp location
-  const fd = fs.openSync(`${TMP}/${file}`, "w");
-  fs.writeSync(fd, JSON.stringify(ready));
+  let fd = fs.openSync(`${TMP}/${file}`, "w");
+  fs.writeSync(fd, JSON.stringify(allData));
   fs.closeSync(fd);
 
   // execute wrangler command to upload the data to the KV store
