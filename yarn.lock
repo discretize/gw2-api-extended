@@ -49,6 +49,11 @@
     escape-string-regexp "^4.0.0"
     rollup-plugin-node-polyfills "^0.2.1"
 
+"@hono/node-server@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@hono/node-server/-/node-server-1.1.1.tgz#028d9937e4004b3861e814ee45a2cb117e273003"
+  integrity sha512-0ZfrcW8Y+TAGNzKGoDB1iQ7Gv7uGsGDOYlz7nckXcHRpK60Oxuz1ttiFmdHYmI6kGO+/VJ8Iy58LDhoTPqkiow==
+
 "@iarna/toml@^2.2.5":
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/@iarna/toml/-/toml-2.2.5.tgz#b32366c89b43c6f8cefbdefac778b9c828e3ba8c"
