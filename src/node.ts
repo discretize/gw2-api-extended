@@ -1,10 +1,15 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import skills from "../data/api-extended/skills.json";
-import traits from "../data/api-extended/traits.json";
-import items from "../data/api-extended/items.json";
-import specializations from "../data/api-extended/specializations.json";
+import fs from "fs";
+
+function readFile(path: string, file: string) {
+  const data = JSON.parse(
+    fs.readFileSync(path + file, { encoding: "utf8", flag: "r" })
+  );
+
+  return data;
+}
 
 const app = new Hono();
 app.use("/v2/*", cors());
@@ -14,9 +19,8 @@ const handleEndpoint = (namespace: any) => async (c: any) => {
     .query("ids")
     .split(",")
     .map((id: string) => parseInt(id))
-    .map((id: number) => namespace.find((datum: any) => datum.id === id));
-
-  console.log(data);
+    .map((id: number) => namespace.find((datum: any) => datum.id === id))
+    .filter((datum: any) => datum);
 
   if (data.length === 0) {
     c.status(404);
@@ -25,10 +29,22 @@ const handleEndpoint = (namespace: any) => async (c: any) => {
   return c.json(data);
 };
 
-app.get("/v2/skills", handleEndpoint(skills));
-app.get("/v2/traits", handleEndpoint(traits));
-app.get("/v2/items", handleEndpoint(items));
-app.get("/v2/specializations", handleEndpoint(specializations));
+app.get(
+  "/v2/skills",
+  handleEndpoint(readFile("./data/api-extended/", "skills.json"))
+);
+app.get(
+  "/v2/traits",
+  handleEndpoint(readFile("./data/api-extended/", "traits.json"))
+);
+app.get(
+  "/v2/items",
+  handleEndpoint(readFile("./data/api-extended/", "items.json"))
+);
+app.get(
+  "/v2/specializations",
+  handleEndpoint(readFile("./data/api-extended/", "specializations.json"))
+);
 
 serve(app, (info) => {
   console.log(`Listening on http://localhost:${info.port}`); // Listening on http://localhost:3000
