@@ -46,6 +46,6 @@ app.get(
   handleEndpoint(readFile("./data/api-extended/", "specializations.json"))
 );
 
-serve(app, (info) => {
+serve({ fetch: app.fetch, port: 3333 }, (info) => {
   console.log(`Listening on http://localhost:${info.port}`); // Listening on http://localhost:3000
 });
